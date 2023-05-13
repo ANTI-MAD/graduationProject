@@ -19,6 +19,14 @@ class UserService {
   getAdminBoard() {
     return axios.get(API_URL + 'admin', { headers: authHeader() });
   }
+
+  getCatalogBoard() {
+    return axios.get('http://localhost:8080/api/catalog', { headers: authHeader() });
+  }
+
+  getCatalog() {
+    return JSON.parse(localStorage.getItem('products'));
+  }
 }
 
 export default new UserService();

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component, useEffect} from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -12,6 +12,7 @@ import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
+import Catalog from "./components/catalog.component";
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class App extends Component {
       showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
+      showCatalog: false,
     };
   }
 
@@ -33,6 +35,7 @@ class App extends Component {
         currentUser: account,
         showModeratorBoard: account.roles.includes("ROLE_MODERATOR"),
         showAdminBoard: account.roles.includes("ROLE_ADMIN"),
+        showCatalog: account
       });
     }
   }
@@ -42,7 +45,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, showCatalog } = this.state;
 
     return (
       <div>
@@ -53,7 +56,7 @@ class App extends Component {
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
               <Link to={"/home"} className="nav-link">
-                Home
+                Главная страница
               </Link>
             </li>
 
@@ -73,10 +76,18 @@ class App extends Component {
               </li>
             )}
 
+            {showCatalog && (
+                <li className="nav-item">
+                  <Link to={"/catalog"} className="nav-link">
+                    Каталог
+                  </Link>
+                </li>
+            )}
+
             {currentUser && (
               <li className="nav-item">
                 <Link to={"/account"} className="nav-link">
-                  User
+                  Создать товар
                 </Link>
               </li>
             )}
@@ -91,7 +102,7 @@ class App extends Component {
               </li>
               <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={this.logOut}>
-                  LogOut
+                  Выйти
                 </a>
               </li>
             </div>
@@ -99,13 +110,13 @@ class App extends Component {
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
-                  Login
+                  Войти
                 </Link>
               </li>
 
               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
-                  Sign Up
+                  Зарегистрироваться
                 </Link>
               </li>
             </div>
@@ -118,6 +129,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
+            <Route path="/catalog" component={Catalog} />
             <Route path="/account" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />

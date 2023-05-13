@@ -20,7 +20,7 @@ export default class Profile extends Component {
     this.setState({ currentUser: currentUser, userReady: true })
   }
 
-  render() {
+  /*render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />
     }
@@ -28,7 +28,7 @@ export default class Profile extends Component {
     const { currentUser } = this.state;
 
     return (
-      <div className="container">
+        <div className="container">
         {(this.state.userReady) ?
         <div>
         <header className="jumbotron">
@@ -56,6 +56,43 @@ export default class Profile extends Component {
         </ul>
       </div>: null}
       </div>
+    );
+  }*/
+
+  render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
+
+    const { currentUser } = this.state;
+
+    return (
+        <div className="container">
+          {(this.state.userReady) ?
+              <div>
+                <header className="jumbotron">
+                  <h3>
+                    <strong>Бакун Артём</strong> Профиль
+                  </h3>
+                </header>
+                <p>
+                  <strong>Дата рождения:</strong>{" "}
+                  05.02.1999
+                </p>
+                <p>
+                  <strong>Город:</strong>{" "}
+                  Ивье
+                </p>
+                <p>
+                  <strong>Email:</strong>{" "}
+                  {currentUser.email}
+                </p>
+                <p>
+                  <strong>Роль:</strong>{" "}
+                    Покупатель
+                </p>
+              </div>: null}
+        </div>
     );
   }
 }
