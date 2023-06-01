@@ -7,28 +7,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.Currency;
 
-@Entity(name = "product")
-@Table(name = "products")
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity(name = "bucket")
+@Table(name = "bucket")
 @Getter
 @Setter
-public class ProductEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class BucketEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(max = 20)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private ProductEntity product;
 
-    private Float price;
-    private Integer stockBalance;
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private OrderEntity order;
 }

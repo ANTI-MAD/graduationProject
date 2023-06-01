@@ -9,10 +9,12 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
-import BoardUser from "./components/board-user.component";
+import FarmerAddProduct from "./components/addProduct.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import Catalog from "./components/catalog.component";
+import Bucket from "./components/bucket.component";
+import OrdersBoard from "./components/orders.component";
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +26,9 @@ class App extends Component {
       showAdminBoard: false,
       currentUser: undefined,
       showCatalog: false,
+      showOrders: false,
+      bucket: false,
+      orders: false
     };
   }
 
@@ -35,7 +40,11 @@ class App extends Component {
         currentUser: account,
         showModeratorBoard: account.roles.includes("ROLE_MODERATOR"),
         showAdminBoard: account.roles.includes("ROLE_ADMIN"),
-        showCatalog: account
+        showCatalog: account,
+        showOrders: account.roles.includes("ROLE_MODERATOR"),
+        addProduct: account.roles.includes("ROLE_MODERATOR"),
+        bucket: account,
+        orders: account.roles.includes("ROLE_MODERATOR")
       });
     }
   }
@@ -45,7 +54,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, showCatalog } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, showCatalog, showOrders, addProduct, bucket } = this.state;
 
     return (
       <div>
@@ -60,14 +69,6 @@ class App extends Component {
               </Link>
             </li>
 
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
-                  Moderator Board
-                </Link>
-              </li>
-            )}
-
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -78,18 +79,34 @@ class App extends Component {
 
             {showCatalog && (
                 <li className="nav-item">
-                  <Link to={"/catalog"} className="nav-link">
+                  <Link to={"/api/catalog"} className="nav-link">
                     Каталог
                   </Link>
                 </li>
             )}
 
-            {currentUser && (
+            {addProduct && (
               <li className="nav-item">
-                <Link to={"/account"} className="nav-link">
-                  Создать товар
+                <Link to={"/addProduct"} className="nav-link">
+                  Добавить товар
                 </Link>
               </li>
+            )}
+
+            {bucket && (
+                <li className="nav-item">
+                  <Link to={"/api/bucket"} className="nav-link">
+                    Корзина
+                  </Link>
+                </li>
+            )}
+
+            {bucket && (
+                <li className="nav-item">
+                  <Link to={"/api/orders"} className="nav-link">
+                    Заказы
+                  </Link>
+                </li>
             )}
           </div>
 
@@ -129,9 +146,10 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
-            <Route path="/catalog" component={Catalog} />
-            <Route path="/account" component={BoardUser} />
-            <Route path="/mod" component={BoardModerator} />
+            <Route path="/api/catalog" component={Catalog} />
+            <Route path="/api/bucket" component={Bucket} />
+            <Route path="/api/orders" component={OrdersBoard} />
+            <Route path="/addProduct" component={FarmerAddProduct} />
             <Route path="/admin" component={BoardAdmin} />
           </Switch>
         </div>

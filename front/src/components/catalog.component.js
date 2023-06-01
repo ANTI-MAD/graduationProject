@@ -2,6 +2,8 @@ import AuthService from "../services/auth.service";
 import UserService from "../services/user.service"
 import {Redirect} from "react-router-dom";
 import {Component, useState} from "react";
+import Form from "react-validation/build/form";
+import Item from "./Item";
 
 export default class Catalog extends Component {
     constructor(props) {
@@ -10,14 +12,21 @@ export default class Catalog extends Component {
         this.state = {
             redirect: null,
             catalogReady: false,
-            catalog: { name: "" }
+            catalog: { name: "" },
+            productId: null
         };
     }
 
     componentDidMount() {
-        const catalog = UserService.getCatalogBoard();
-
-        this.setState({ catalog: catalog, catalogReady: true })
+        //const catalog = UserService.getCatalogBoard();
+        UserService.getCatalogBoard().then(
+            response => {
+                this.setState({
+                    content: response.data,
+                    catalog: response.data,
+                    catalogReady: true
+                });
+            })
     }
 
     render() {
@@ -25,41 +34,27 @@ export default class Catalog extends Component {
             return <Redirect to={this.state.redirect} />
         }
 
-        const { catalog } = this.state;
-
         return (
-            <div className="container">
+            <div className="container catalog">
+                <label>
+                    Сортировка по:
+                    <select>
+                        <option value="byName">имени</option>
+                        <option value="byPrice">цене</option>
+                    </select>
+                </label>
                 {(this.state.catalogReady) ?
                     <div>
-                        <p3>
-                            <strong>Название   </strong>
-                            <strong>     Цена        Количество на складе</strong>
-                        </p3>
 
-                        <div>
-                            Редис 2.0 30
-                            <button>Заказать</button>
-                        </div>
 
-                        <div>
-                            Лук 6.5 80
-                            <button>Заказать</button>
+                        <Form onSubmit={this.pressButton}>
+                        <div className={"product"}>
+                            {this.state.catalog.map((product) =>
+                                <Item product={product}>
+                                </Item>
+                                )}
                         </div>
-
-                        <div>
-                            Укроп 6.5 120
-                            <button>Заказать</button>
-                        </div>
-
-                        <div>
-                            Петрушка 6.0 50
-                            <button>Заказать</button>
-                        </div>
-
-                        <div>
-                            Помидор 3.0 410
-                            <button>Заказать</button>
-                        </div>
+                        </Form>
 
                     </div>: null}
             </div>

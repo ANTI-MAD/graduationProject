@@ -20,7 +20,7 @@ export default class Profile extends Component {
     this.setState({ currentUser: currentUser, userReady: true })
   }
 
-  /*render() {
+  render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />
     }
@@ -33,7 +33,7 @@ export default class Profile extends Component {
         <div>
         <header className="jumbotron">
           <h3>
-            <strong>{currentUser.username}</strong> Profile
+            <strong>{currentUser.username}</strong> Профиль
           </h3>
         </header>
         <p>
@@ -49,7 +49,7 @@ export default class Profile extends Component {
           <strong>Email:</strong>{" "}
           {currentUser.email}
         </p>
-        <strong>Authorities:</strong>
+        <strong>Роль:</strong>
         <ul>
           {currentUser.roles &&
             currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
@@ -57,9 +57,9 @@ export default class Profile extends Component {
       </div>: null}
       </div>
     );
-  }*/
+  }
 
-  render() {
+  /*render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />
     }
@@ -72,12 +72,12 @@ export default class Profile extends Component {
               <div>
                 <header className="jumbotron">
                   <h3>
-                    <strong>Бакун Артём</strong> Профиль
+                    <strong>Бакун Георгий</strong> Профиль
                   </h3>
                 </header>
                 <p>
                   <strong>Дата рождения:</strong>{" "}
-                  05.02.1999
+                  10.08.2002
                 </p>
                 <p>
                   <strong>Город:</strong>{" "}
@@ -89,10 +89,10 @@ export default class Profile extends Component {
                 </p>
                 <p>
                   <strong>Роль:</strong>{" "}
-                    Покупатель
+                    Админ
                 </p>
               </div>: null}
         </div>
     );
-  }
+  }*/
 }
